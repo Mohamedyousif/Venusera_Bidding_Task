@@ -22,14 +22,13 @@ namespace BiddingWebAPI.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _uow;
-        private readonly IMailService _mailService;
+        
         private readonly AppSettings _appSettings;
         //private readonly IAutoMapper _mapper;
 
-        public UserService(IUnitOfWork uow, IMailService mailService, IOptions<AppSettings> appSettings)
+        public UserService(IUnitOfWork uow,  IOptions<AppSettings> appSettings)
         {
             _uow = uow;
-            _mailService = mailService;
             _appSettings = appSettings.Value;
             //  _mapper = mapper;
         }
@@ -56,7 +55,7 @@ namespace BiddingWebAPI.Services
 
             _uow.Add(user);
             await _uow.CommitAsync();
-            _mailService.SendVerificationLinkEmail(user.Email, user.ActivationCode, "http", "localhost", "5000");
+            
             return user;
         }
 

@@ -18,9 +18,11 @@ namespace BiddingWebAPI.Controllers
     {
         private readonly IUserService _service;
         private readonly IAutoMapper _mapper;
+        private readonly IMailService _mailService;
 
-        public UserController(IUserService service, IAutoMapper mapper)
+        public UserController(IUserService service, IMailService mailService, IAutoMapper mapper)
         {
+            _mailService = mailService;
             _mapper = mapper;
             _service = service;
         }
@@ -41,6 +43,9 @@ namespace BiddingWebAPI.Controllers
         {
             var item = await _service.Create(requestModel);
             var model = _mapper.Map<UserModel>(item);
+
+            _mailService.SendVerificationLinkEmail(item.Name, item.Email, item.ActivationCode, "http", "localhost", "5000");
+
             return model;
         }
 

@@ -9,12 +9,12 @@ namespace BiddingWebAPI.Services
 {
     public class MailService : IMailService
     {
-        public void SendVerificationLinkEmail(string emailId, string activationcode, string scheme, string host, string port)
+        public void SendVerificationLinkEmail(string name,string emailId, string activationcode, string scheme, string host, string port)
         {
             var varifyUrl = scheme + "://" + host + ":" + port + "/api/users/ActivateAccount/" + activationcode;
-            var fromMail = new MailAddress("eng.mohamedyousif@gmail.com", "welcome mithilesh");
+            var fromMail = new MailAddress("TaskVenusera@gmail.com", $"welcome {name}");
             var toMail = new MailAddress(emailId);
-            var frontEmailPassowrd = "26113985";
+            var fronmEmailPassowrd = "LEVM1jJSdDkmPAqRLX4Nuseu";
             string subject = "Your account is successfull created";
             string body = "<br/><br/>We are excited to tell you that your account is" +
         " successfully created. Please click on the below link to verify your account" +
@@ -27,7 +27,7 @@ namespace BiddingWebAPI.Services
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromMail.Address, frontEmailPassowrd)
+                Credentials = new NetworkCredential(fromMail.Address, fronmEmailPassowrd)
 
             };
             using (var message = new MailMessage(fromMail, toMail)
@@ -36,7 +36,15 @@ namespace BiddingWebAPI.Services
                 Body = body,
                 IsBodyHtml = true
             })
-                smtp.Send(message);
+                try
+                {
+                    smtp.Send(message);
+                }
+                catch (Exception ex)
+                {
+
+                }
+                
         }
     }
 }

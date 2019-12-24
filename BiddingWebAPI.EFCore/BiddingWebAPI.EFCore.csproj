@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20191222234845_Add_ClientAndServiceProvider.Designer.cs" />
     <Compile Remove="Migrations\20191222235559_Add_ClientAndServiceProvider.cs" />
     <Compile Remove="Migrations\20191222235559_Add_ClientAndServiceProvider.Designer.cs" />
+    <Compile Remove="Migrations\20191224154405_Role_Not_Identity.cs" />
+    <Compile Remove="Migrations\20191224154405_Role_Not_Identity.Designer.cs" />
     <Compile Remove="Model\Client.cs" />
     <Compile Remove="Model\ServiceProvider.cs" />
   </ItemGroup>

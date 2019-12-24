@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using BiddingWebAPI.EFCore;
 using Microsoft.EntityFrameworkCore;
 using BiddingWebAPI.Filters;
+using BiddingWebAPI.EFCore.Model;
 
 namespace BiddingWebAPI
 {
@@ -85,6 +86,18 @@ namespace BiddingWebAPI
             {
                 var context = serviceScope.ServiceProvider.GetService<DatabaseContext>();
                 context.Database.Migrate();
+
+                var services = serviceScope.ServiceProvider;
+
+                try
+                {
+                    SeedData.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
+                }
             }
         }
     }
