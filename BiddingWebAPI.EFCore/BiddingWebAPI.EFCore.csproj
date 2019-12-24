@@ -9,9 +9,12 @@
     <Compile Remove="Migrations\20191222234845_Add_ClientAndServiceProvider.Designer.cs" />
     <Compile Remove="Migrations\20191222235559_Add_ClientAndServiceProvider.cs" />
     <Compile Remove="Migrations\20191222235559_Add_ClientAndServiceProvider.Designer.cs" />
+    <Compile Remove="Model\Client.cs" />
+    <Compile Remove="Model\ServiceProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="3.2.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
   </ItemGroup>

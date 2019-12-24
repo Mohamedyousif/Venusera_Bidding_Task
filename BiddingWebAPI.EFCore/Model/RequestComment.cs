@@ -14,7 +14,7 @@ namespace BiddingWebAPI.EFCore.Model
         public string Comment { get; set; }
 
         [ForeignKey("ServiceProviderID")]
-        public ServiceProvider ServiceProvider { get; set; }
+        public User ServiceProvider { get; set; }
 
         [ForeignKey("RequestID")]
         public Request Request { get; set; }

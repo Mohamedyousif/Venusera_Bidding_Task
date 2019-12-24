@@ -8,7 +8,7 @@ namespace BiddingWebAPI.EFCore
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext(DbContextOptions options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
        : base(options)
         {
         }
@@ -18,7 +18,7 @@ namespace BiddingWebAPI.EFCore
         public DbSet<Request> Requests { get; set; }
         public DbSet<RequestAttachement> RequestAttachements { get; set; }
         public DbSet<RequestComment> RequestComments { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<ServiceProvider> ServiceProviders { get; set; }
+        
+
     }
 }

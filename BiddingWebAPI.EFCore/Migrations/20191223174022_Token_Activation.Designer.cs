@@ -4,20 +4,44 @@ using BiddingWebAPI.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BiddingWebAPI.EFCore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20191223174022_Token_Activation")]
+    partial class Token_Activation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BiddingWebAPI.EFCore.Model.Client", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("BiddingWebAPI.EFCore.Model.Request", b =>
                 {
@@ -99,12 +123,34 @@ namespace BiddingWebAPI.EFCore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Name")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("BiddingWebAPI.EFCore.Model.ServiceProvider", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("ServiceProviders");
                 });
 
             modelBuilder.Entity("BiddingWebAPI.EFCore.Model.User", b =>
@@ -124,11 +170,6 @@ namespace BiddingWebAPI.EFCore.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -146,9 +187,18 @@ namespace BiddingWebAPI.EFCore.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BiddingWebAPI.EFCore.Model.Client", b =>
+                {
+                    b.HasOne("BiddingWebAPI.EFCore.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BiddingWebAPI.EFCore.Model.Request", b =>
                 {
-                    b.HasOne("BiddingWebAPI.EFCore.Model.User", "Client")
+                    b.HasOne("BiddingWebAPI.EFCore.Model.Client", "Client")
                         .WithMany("Requests")
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -172,9 +222,18 @@ namespace BiddingWebAPI.EFCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BiddingWebAPI.EFCore.Model.User", "ServiceProvider")
+                    b.HasOne("BiddingWebAPI.EFCore.Model.ServiceProvider", "ServiceProvider")
                         .WithMany("RequestComments")
                         .HasForeignKey("ServiceProviderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BiddingWebAPI.EFCore.Model.ServiceProvider", b =>
+                {
+                    b.HasOne("BiddingWebAPI.EFCore.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

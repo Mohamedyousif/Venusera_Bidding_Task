@@ -13,6 +13,10 @@ using Microsoft.Extensions.Logging;
 using AutoWrapper;
 using BiddingWebAPI.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Http;
+using BiddingWebAPI.EFCore;
+using Microsoft.EntityFrameworkCore;
+using BiddingWebAPI.Filters;
 
 namespace BiddingWebAPI
 {
@@ -28,15 +32,24 @@ namespace BiddingWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.ConfigureCors();
-            services.ConfigureIISIntegration();
             services.ConfigureDbContext(Configuration);
+            services.ConfigureIISIntegration();
+            services.ConfigureJwt(Configuration);
+            services.AddServices();
+            services.ConfigureAutoMapper();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddMvc(options => { options.Filters.Add(new ApiExceptionFilter()); });
             services.AddControllers();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            InitDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,12 +70,22 @@ namespace BiddingWebAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void InitDatabase(IApplicationBuilder app)
+        {
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<DatabaseContext>();
+                context.Database.Migrate();
+            }
         }
     }
 }

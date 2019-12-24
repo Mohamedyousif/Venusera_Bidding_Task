@@ -21,7 +21,7 @@ namespace BiddingWebAPI.EFCore.Model
         public int ClientID { get; set; }
         
         [ForeignKey("ClientID")]
-        public Client Client { get; set; }
+        public User Client { get; set; }
 
         public IList<RequestAttachement> RequestAttachements { get; set; }
 

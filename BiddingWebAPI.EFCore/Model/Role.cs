@@ -6,6 +6,6 @@ namespace BiddingWebAPI.EFCore.Model
 {
     public class Role : BaseModel
     {
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 }
