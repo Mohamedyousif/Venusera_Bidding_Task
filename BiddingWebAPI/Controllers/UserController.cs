@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using BiddingWebAPI.ApiModels.Users;
 using BiddingWebAPI.EFCore.Model;
 using BiddingWebAPI.Filters;
+using BiddingWebAPI.Helpers;
 using BiddingWebAPI.Mapping;
 using BiddingWebAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace BiddingWebAPI.Controllers
 {
@@ -19,9 +21,11 @@ namespace BiddingWebAPI.Controllers
         private readonly IUserService _service;
         private readonly IAutoMapper _mapper;
         private readonly IMailService _mailService;
+        private readonly AppSettings _appSettings;
 
-        public UserController(IUserService service, IMailService mailService, IAutoMapper mapper)
+        public UserController(IUserService service, IMailService mailService, IAutoMapper mapper, IOptions<AppSettings> appSettings)
         {
+            _appSettings = appSettings.Value;
             _mailService = mailService;
             _mapper = mapper;
             _service = service;
@@ -44,7 +48,7 @@ namespace BiddingWebAPI.Controllers
             var item = await _service.Create(requestModel);
             var model = _mapper.Map<UserModel>(item);
 
-            _mailService.SendVerificationLinkEmail(item.Name, item.Email, item.ActivationCode, "http", "localhost", "5000");
+            _mailService.SendVerificationLinkEmail(item.Name, item.Email, item.ActivationCode, "http", _appSettings.BaseUrl, _appSettings.Port);
 
             return model;
         }

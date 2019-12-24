@@ -11,7 +11,7 @@ namespace BiddingWebAPI.Services
     {
         public void SendVerificationLinkEmail(string name,string emailId, string activationcode, string scheme, string host, string port)
         {
-            var varifyUrl = scheme + "://" + host + ":" + port + "/api/users/ActivateAccount/" + activationcode;
+            var varifyUrl = scheme + "://" + host + ":" + port + "/ActiveUser.html?code=" + activationcode;
             var fromMail = new MailAddress("TaskVenusera@gmail.com", $"welcome {name}");
             var toMail = new MailAddress(emailId);
             var fronmEmailPassowrd = "LEVM1jJSdDkmPAqRLX4Nuseu";
