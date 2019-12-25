@@ -13,11 +13,11 @@ namespace BiddingWebAPI.Mapping
         public void Configure(IMapperConfigurationExpression configuration)
         {
             var map = configuration.CreateMap<User, UserModel>();
-            map.ForMember(x => x.UserType, x => x.MapFrom(u => u.Role.Name));
+            map.ForMember(x => x.UserType, x => x.MapFrom(u => u.Role.ID));
 
             var map2 = configuration.CreateMap<User, UserWithToken>();
             map2.ForMember(x => x.Token, x => x.MapFrom(u => u.Token))
-                .ForMember(a => a.UserType, a => a.MapFrom(u => u.Role.Name));
+                .ForMember(a => a.UserType, a => a.MapFrom(u => u.Role.ID));
                 
         }
     }
