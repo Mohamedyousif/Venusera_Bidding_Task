@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BiddingWebAPI.Helpers;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,12 +11,17 @@ namespace BiddingWebAPI.Services
 {
     public class MailService : IMailService
     {
+        private readonly AppSettings _appSettings;
+        public MailService(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
         public void SendVerificationLinkEmail(string name,string emailId, string activationcode, string scheme, string host, string port)
         {
             var varifyUrl = scheme + "://" + host + ":" + port + "/ActiveUser.html?code=" + activationcode;
-            var fromMail = new MailAddress("TaskVenusera@gmail.com", $"welcome {name}");
+            var fromMail = new MailAddress(_appSettings.EmailID, $"welcome {name}");
             var toMail = new MailAddress(emailId);
-            var fronmEmailPassowrd = "LEVM1jJSdDkmPAqRLX4Nuseu";
+            var fronmEmailPassowrd = _appSettings.EmailPassword;
             string subject = "Your account is successfull created";
             string body = "<br/><br/>We are excited to tell you that your account is" +
         " successfully created. Please click on the below link to verify your account" +

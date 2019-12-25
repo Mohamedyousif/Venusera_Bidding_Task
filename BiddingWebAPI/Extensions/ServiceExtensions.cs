@@ -107,7 +107,8 @@ namespace BiddingWebAPI.Extensions
             {
                 var interfaceQ = type.GetTypeInfo().GetInterfaces().First();
                 services.AddScoped(interfaceQ, type);
-            }   
+            }
+            services.AddScoped<IUploadImageHelper, UploadImageHelper>();
         }
 
         public static IEnumerable<User> WithoutPasswords(this IEnumerable<User> users)

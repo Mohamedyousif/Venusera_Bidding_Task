@@ -24,8 +24,7 @@ namespace BiddingWebAPI.Services
         private readonly IUnitOfWork _uow;
         
         private readonly AppSettings _appSettings;
-        //private readonly IAutoMapper _mapper;
-
+        
         public UserService(IUnitOfWork uow,  IOptions<AppSettings> appSettings)
         {
             _uow = uow;

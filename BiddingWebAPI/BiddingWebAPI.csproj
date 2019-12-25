@@ -24,4 +24,8 @@
     <ProjectReference Include="..\BiddingWebAPI.EFCore\BiddingWebAPI.EFCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BiddingWebAPI.ApiModels.Requests
 {
-    public class CreateRequestModel
+    public class RequestModel
     {
-        [Required(ErrorMessage = "Request Name is required")]
+        public RequestModel()
+        {
+            Images = new List<RequestAttachmentModel>();
+        }
+        public int ID { get; set; }
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Request Date is required")]
-        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public string Description { get; set; }
 
-        [Required]
         public int ClientID { get; set; }
 
         public IList<RequestAttachmentModel> Images { get; set; }
+        public IList<RequestCommentsModel> Comments { get; set; }
 
     }
 }

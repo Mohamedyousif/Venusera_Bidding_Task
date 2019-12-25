@@ -56,10 +56,10 @@ namespace BiddingWebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseHttpsRedirection();
+            
             app.UseCors("CorsPolicy");
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
