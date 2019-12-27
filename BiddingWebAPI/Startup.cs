@@ -78,6 +78,21 @@ namespace BiddingWebAPI
             {
                 endpoints.MapControllers();
             });
+
+            //app.UseSwagger();
+
+            //// Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            //app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+
+            //app.MapWhen(x => !x.Request.Path.Value.StartsWith("/swagger"), builder =>
+            //{
+            //    builder.UseMvc(routes =>
+            //    {
+            //        routes.MapSpaFallbackRoute(
+            //            "spa-fallback",
+            //            new { controller = "Home", action = "Index" });
+            //    });
+            //});
         }
 
         private void InitDatabase(IApplicationBuilder app)

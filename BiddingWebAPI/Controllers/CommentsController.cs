@@ -46,7 +46,7 @@ namespace BiddingWebAPI.Controllers
             return models;
         }
 
-        [Authorize(Roles = "Client")]
+        [Authorize(Roles = "Client,ServiceProvider")]
         [HttpGet]
         [Route("")]
         public IQueryable<RequestCommentsModel> GetByRequestID(int RequestID)

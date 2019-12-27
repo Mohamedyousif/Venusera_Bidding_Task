@@ -16,9 +16,10 @@ namespace BiddingWebAPI.Services
         {
             _appSettings = appSettings.Value;
         }
-        public void SendVerificationLinkEmail(string name,string emailId, string activationcode, string scheme, string host, string port)
+        public void SendVerificationLinkEmail(string name,string emailId, string activationcode, string activationUrl)
         {
-            var varifyUrl = scheme + "://" + host + ":" + port + "/ActiveUser.html?code=" + activationcode;
+            //var varifyUrl = scheme + "://" + host + ":" + port + "/ActiveUser.html?code=" + activationcode;
+            var varifyUrl = activationUrl + activationcode;
             var fromMail = new MailAddress(_appSettings.EmailID, $"welcome {name}");
             var toMail = new MailAddress(emailId);
             var fronmEmailPassowrd = _appSettings.EmailPassword;

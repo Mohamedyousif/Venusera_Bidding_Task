@@ -48,7 +48,7 @@ namespace BiddingWebAPI.Controllers
             var item = await _service.Create(requestModel);
             var model = _mapper.Map<UserModel>(item);
 
-            _mailService.SendVerificationLinkEmail(item.Name, item.Email, item.ActivationCode, "http", _appSettings.BaseUrl, _appSettings.Port);
+            _mailService.SendVerificationLinkEmail(item.Name, item.Email, item.ActivationCode, _appSettings.ActivationUrl);
 
             return model;
         }

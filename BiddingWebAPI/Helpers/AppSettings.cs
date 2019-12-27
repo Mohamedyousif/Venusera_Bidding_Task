@@ -8,7 +8,7 @@ namespace BiddingWebAPI.Helpers
     public class AppSettings
     {
         public string Secret { get; set; }
-        public string BaseUrl { get; set; }
+        public string ActivationUrl { get; set; }
         public string Port { get; set; }
         public string EmailID { get; set; }
         public string EmailPassword { get; set; }

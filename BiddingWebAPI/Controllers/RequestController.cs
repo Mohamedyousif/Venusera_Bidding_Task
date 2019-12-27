@@ -56,7 +56,7 @@ namespace BiddingWebAPI.Controllers
             return models;
         }
 
-        [Authorize(Roles = "Client")]
+        [Authorize(Roles = "Client,ServiceProvider")]
         [HttpGet]
         [Route("{id}")]
         public RequestModel GetByID(int id)
