@@ -14,16 +14,16 @@ using Microsoft.Extensions.Options;
 
 namespace BiddingWebAPI.Controllers
 {
-    [Route("api/users")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private readonly IUserService _service;
         private readonly IAutoMapper _mapper;
         private readonly IMailService _mailService;
         private readonly AppSettings _appSettings;
 
-        public UserController(IUserService service, IMailService mailService, IAutoMapper mapper, IOptions<AppSettings> appSettings)
+        public UsersController(IUserService service, IMailService mailService, IAutoMapper mapper, IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
             _mailService = mailService;
