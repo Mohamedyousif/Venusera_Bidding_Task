@@ -23,6 +23,7 @@ namespace BiddingWebAPI.Controllers
         private readonly IMailService _mailService;
         private readonly AppSettings _appSettings;
 
+
         public UsersController(IUserService service, IMailService mailService, IAutoMapper mapper, IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
